@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-2.7-red.svg)](https://github.com/snippsat/wx_nrk/releases)
 
-A powerful **drag & drop GUI application** built with Python and wxPython for downloading video content and subtitles from **NRK TV**, **NRK Radio**, and **NRK Super**.
+ Downloading video content and subtitles from **NRK TV**, **NRK Radio**, and **NRK Super**.
 
 ![Application Screenshot](http://imageshack.com/a/img853/8555/pfwy.jpg)
 
@@ -35,14 +35,6 @@ A powerful **drag & drop GUI application** built with Python and wxPython for do
 4. **Wait** for the download to complete
 5. **Find** your downloaded video (MKV) and subtitle (SRT) files in the application directory
 
-## 📋 Supported Platforms
-
-| Platform | Status | File Format | Notes |
-|----------|--------|-------------|-------|
-| **NRK TV** | ✅ Full Support | MKV + SRT | Video with subtitles |
-| **NRK Radio** | ✅ Full Support | MP3/MKV | Dual format system |
-| **NRK Super** | ✅ Full Support | MKV + SRT | Kids content |
-
 ## 🔧 System Requirements
 
 - **Operating System**: Windows (32-bit or 64-bit)
@@ -68,20 +60,6 @@ A powerful **drag & drop GUI application** built with Python and wxPython for do
 ### Version 2.2
 - ➕ **Added** NRK Radio and NRK Super support
 - 🎯 **Improved** program title generation
-- 📺 **Demo** available [here](https://www.dropbox.com/sh/wackcyek8nzziaf/wJ1hAkF49U)
-
-## 🎮 How It Works
-
-The application utilizes the NRK streaming infrastructure:
-
-- **CDN**: Akamai Cloud solution
-- **Streaming**: Fragment-based (Adobe HDS) streaming
-- **Quality Range**: 
-  - On-demand: 0.2 kbps to 2.5 Mbps
-  - Live TV: 0.2 Mbps to 3.7 Mbps
-- **Video Compression**: MPEG4, H.264 (AAC audio codec)
-- **Resolution Range**: 320×180 to 1280×720 pixels
-- **Subtitle Format**: Converted from NRK's .str format to standard .srt
 
 ## 🛠️ Technical Details
 
@@ -92,10 +70,6 @@ The application utilizes the NRK streaming infrastructure:
 - **Subtitle Processing**: VTT to SRT conversion
 - **Web Scraping**: BeautifulSoup4
 - **HTTP Requests**: requests library
-
-## 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
@@ -109,7 +83,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## ⚠️ Disclaimer
 
 This tool is for personal use only. Please respect NRK's terms of service and only download content you have the right to access.
-
----
-
-> 🎯 **Pro Tip**: For best results, use the "high" quality setting and ensure you have a stable internet connection for large downloads.

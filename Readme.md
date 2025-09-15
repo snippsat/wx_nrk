@@ -23,7 +23,7 @@
 
 ### Installation
 
-1. **Download** the latest release from the [Downloads](https://github.com/snippsat/wx_nrk/releases) section
+1. **Download** the latest release are in zip files over  
 2. **Extract** the zip file to your preferred location
 3. **Run** `Nrk.exe` to start the application
 

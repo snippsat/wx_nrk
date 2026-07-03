@@ -15,7 +15,14 @@ Drag a URL onto the window to start a download.
 
 ## Download
 
-Grab the latest release from [GitHub Releases](https://github.com/snippsat/wx_nrk/releases), extract the zip, and run `Nrk.exe`.
+Download the zip for your Windows version from [GitHub Releases](https://github.com/snippsat/wx_nrk/releases):
+
+| File | Platform |
+|------|----------|
+| `wx_nrk_32_2.7.zip` | 32-bit Windows |
+| `wx_nrk_64_2.7.zip` | 64-bit Windows |
+
+Extract the zip and run `Nrk.exe`.
 
 ## Usage
 

@@ -11,7 +11,7 @@ Drag a URL onto the window to start a download.
 
 - Windows (32-bit or 64-bit)
 - Internet connection
-- No separate install needed all bundle in $\color{Green}{\textsf{nrk.exe}}$ 
+- No separate install needed,all bundle in $\color{Green}{\textsf{nrk.exe}}$ 
 
 ## Download
 

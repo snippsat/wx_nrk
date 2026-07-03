@@ -11,7 +11,7 @@ Drag a URL onto the window to start a download.
 
 - Windows (32-bit or 64-bit)
 - Internet connection
-- No separate install needed bundle Python 3.11+ and FFmpeg; 
+- No separate install needed all bundle in $\color{Green}{\textsf{nrk.exe}}$ 
 
 ## Download
 
@@ -22,7 +22,7 @@ Grab the latest release from [GitHub Releases](https://github.com/snippsat/wx_nr
 1. Start the application.
 2. Choose video quality: low, medium, or high (default: high).
 3. Drag a URL from NRK TV, NRK Radio, or NRK Super into the window.
-4. Downloads are saved in the application directory as `.mkv` (video) or `.mp3` (radio podcasts), with subtitles as `.srt` when available.
+4. Downloads are saved in the application directory as $\color{Green}{\textsf{.mkv}}$ (video) or $\color{Green}{\textsf{.mp3}}$  (radio podcasts), with subtitles as $\color{Green}{\textsf{.srt}}$ when available.
 
 Multiple URLs can be dropped in sequence; each download runs in its own thread. Use **Close all downloads** to stop active FFmpeg processes.
 

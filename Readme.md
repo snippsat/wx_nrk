@@ -1,85 +1,70 @@
-# 🎥 WX NRK - Video Downloader
+# WX NRK
 
-[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/)
-[![wxPython](https://img.shields.io/badge/wxPython-GUI-green.svg)](https://www.wxpython.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/Version-2.7-red.svg)](https://github.com/snippsat/wx_nrk/releases)
+[![Python](https://img.shields.io/badge/Python-3.11+-blue.svg)](https://www.python.org/) [![wxPython](https://img.shields.io/badge/wxPython-GUI-green.svg)](https://www.wxpython.org/) [![Windows](https://img.shields.io/badge/Windows-10%2B-0078D6.svg)](https://www.microsoft.com/windows) [![FFmpeg](https://img.shields.io/badge/FFmpeg-included-orange.svg)](https://ffmpeg.org/) [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE) [![Version](https://img.shields.io/badge/Version-2.7-red.svg)](https://github.com/snippsat/wx_nrk/releases)
 
- Downloading video content and subtitles from **NRK TV**, **NRK Radio**, and **NRK Super**.
+Downloading video content and subtitles from **NRK TV**, **NRK Radio**, and **NRK Super**.  
+Drag a URL onto the window to start a download.
 
-![Application Screenshot](http://imageshack.com/a/img853/8555/pfwy.jpg)
+![Application screenshot](http://imageshack.com/a/img853/8555/pfwy.jpg)
 
-## ✨ Features
+## Requirements
 
-- 🖱️ **Drag & Drop Interface** - Simply drag URLs or video thumbnails to the application window
-- 🎬 **Multi-Platform Support** - Works with NRK TV, NRK Radio, and NRK Super
-- 📺 **Quality Selection** - Choose from low, medium, or high quality (high is default)
-- 📝 **Automatic Subtitles** - Downloads and converts subtitles to SRT format
-- 🧵 **Multi-threading** - Download multiple videos simultaneously with bandwidth sharing
-- 🎵 **Audio Support** - Download radio content in MP3 or MKV format
-- 📦 **Portable** - No additional installation required, includes Python and FFmpeg
+- Windows (32-bit or 64-bit)
+- Internet connection
+- No separate install needed bundle Python 3.11+ and FFmpeg; 
 
-## 🚀 Quick Start
+## Download
 
-### Installation
+Grab the latest release from [GitHub Releases](https://github.com/snippsat/wx_nrk/releases), extract the zip, and run `Nrk.exe`.
 
-1. **Download** the latest release are in zip files over  
-2. **Extract** the zip file to your preferred location
-3. **Run** `Nrk.exe` to start the application
+## Usage
 
-### Usage
+1. Start the application.
+2. Choose video quality: low, medium, or high (default: high).
+3. Drag a URL from NRK TV, NRK Radio, or NRK Super into the window.
+4. Downloads are saved in the application directory as `.mkv` (video) or `.mp3` (radio podcasts), with subtitles as `.srt` when available.
 
-1. **Open** the WX NRK application
-2. **Select** your preferred video quality (low/medium/high)
-3. **Drag** a URL from NRK TV/Radio/Super into the application window
-4. **Wait** for the download to complete
-5. **Find** your downloaded video (MKV) and subtitle (SRT) files in the application directory
+Multiple URLs can be dropped in sequence; each download runs in its own thread. Use **Close all downloads** to stop active FFmpeg processes.
 
-## 🔧 System Requirements
+## Supported sources
 
-- **Operating System**: Windows (32-bit or 64-bit)
-- **Dependencies**: Included (Python 3.11+ and FFmpeg bundled)
-- **Internet**: Required for downloading content
+| Source | Output |
+|--------|--------|
+| NRK TV | MKV + SRT subtitles |
+| NRK Super | MKV + SRT subtitles |
+| NRK Radio (stream) | MKV |
+| NRK Radio (podcast) | MP3 |
 
-## 📖 Version History
+## Changelog
 
-### Version 2.7 (Latest) - *January 14, 2024*
-- 🔧 **Fixed** media naming for older content
-- 🎯 **Improved** compatibility with legacy NRK content
+**2.7** (2024-01-14) — Fixed media naming for older NRK content.
 
-### Version 2.6
-- 🔧 **Fixed** NRK Radio dual-system support (MP3 + MKV streaming)
-- ✅ **Maintained** full NRK TV compatibility
+**2.6** — NRK Radio dual-system support (MP3 and MKV streaming); NRK TV unchanged.
 
-### Version 2.4
-- ✅ **Stable** performance for NRK TV content
+**2.4** — Stable NRK TV downloads.
 
-### Version 2.3
-- 🔧 **Fixed** issues with specific NRK Radio programs
+**2.3** — Fixes for specific NRK Radio programs.
 
-### Version 2.2
-- ➕ **Added** NRK Radio and NRK Super support
-- 🎯 **Improved** program title generation
+**2.2** — NRK Radio and NRK Super support; improved program title handling.
 
-## 🛠️ Technical Details
+## Development
 
-- **Language**: Python 3.11+
-- **GUI Framework**: wxPython
-- **Video Processing**: FFmpeg
-- **Audio Conversion**: AAC to AC3 codec
-- **Subtitle Processing**: VTT to SRT conversion
-- **Web Scraping**: BeautifulSoup4
-- **HTTP Requests**: requests library
+Source: `drag_drop_2_7.py`
 
-## 📄 License
+| Component | Tool |
+|-----------|------|
+| GUI | wxPython |
+| HTTP / parsing | requests, BeautifulSoup4 |
+| Transcoding | FFmpeg (video copy, AAC → AC3; VTT → SRT) |
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Requires Python 3.11+, wxPython, requests, beautifulsoup4, and unidecode. FFmpeg must be on `PATH` when running from source.
 
-## 👤 Author
+## License
 
-**Tom (Snippsat)**
-- Copyright © 2021-2024
+MIT — see [LICENSE](LICENSE).
 
-## ⚠️ Disclaimer
+Copyright © 2021–2024 Tom (Snippsat)
 
-This tool is for personal use only. Please respect NRK's terms of service and only download content you have the right to access.
+## Disclaimer
+
+For personal use only. Respect NRK's terms of service and download only content you are entitled to access.

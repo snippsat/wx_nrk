@@ -15,6 +15,41 @@ from unidecode import unidecode
 
 VERSION = "2.7"
 
+def resolve_hls_url(stream_url, vid_quality):
+    """Pick the highest-quality single-variant HLS URL from NRK's muxed playlist."""
+    quality = {
+        "low": "?bw_high=1000",
+        "med": "?bw_high=2000",
+        "high": "?bw_high=3500",
+    }
+    master_url = f'{stream_url}{quality[vid_quality]}'
+    response = requests.get(master_url)
+    response.raise_for_status()
+    lines = response.text.splitlines()
+    best_bandwidth = -1
+    best_path = None
+    best_framerate = 25.0
+    for i, line in enumerate(lines):
+        if line.startswith('#EXT-X-STREAM-INF:'):
+            bandwidth = 0
+            framerate = 25.0
+            for part in line.split(','):
+                if part.startswith('BANDWIDTH='):
+                    bandwidth = int(part.split('=', 1)[1])
+                elif part.startswith('FRAME-RATE='):
+                    framerate = float(part.split('=', 1)[1])
+            if i + 1 < len(lines) and not lines[i + 1].startswith('#'):
+                variant_path = lines[i + 1].strip()
+                if bandwidth >= best_bandwidth:
+                    best_bandwidth = bandwidth
+                    best_path = variant_path
+                    best_framerate = framerate
+    if not best_path:
+        return master_url, best_framerate
+    base = master_url.split('?')[0].rsplit('/', 1)[0] + '/'
+    variant_url = best_path if best_path.startswith('http') else base + best_path
+    return variant_url, best_framerate
+
 def nrk_super(url):
     '''Parse/API get content'''
     try:
@@ -56,11 +91,11 @@ def nrk_super(url):
         if len(resp_json['preplay']['titles']['subtitle']) < 90:
             resp_json = resp_json['preplay']['titles']
             prog_title = f"{resp_json['title']} {' '.join(resp_json['subtitle'].split())}"
-            prog_title = re.sub('[/\\\?%\*:|"<>]', '_', prog_title)
+            prog_title = re.sub(r'[/\\\?%\*:|"<>]', '_', prog_title)
         else:
             resp_json = resp_json['preplay']['titles']
             prog_title = resp_json['title']
-            prog_title = re.sub('[/\\\?%\*:|"<>]', '_', prog_title)
+            prog_title = re.sub(r'[/\\\?%\*:|"<>]', '_', prog_title)
         return stream_url, prog_title, sub_text
     except Exception as error:
         return error
@@ -74,7 +109,7 @@ def radio(url, vid_quality):
             data = response.json()
             mp3_url = data["playable"]["assets"][0]["url"]
             temp_name = data["statistics"]["ga"]["dimension2"]
-            basename = re.sub('[/\\\?%\*:|"<>]', '_', temp_name)
+            basename = re.sub(r'[/\\\?%\*:|"<>]', '_', temp_name)
             filename = basename + '.mp3'
             resp = requests.get(mp3_url)
             with open(filename, 'wb') as file:
@@ -89,7 +124,7 @@ def radio(url, vid_quality):
         url = data.get("playable", {}).get("assets", [])[0].get("url")
         stream_url = url.split('?')
         dimension2 = data["statistics"]["ga"]["dimension2"]
-        base_name = re.sub('[/\\\?%\*:|"<>]', '_', dimension2)
+        base_name = re.sub(r'[/\\\?%\*:|"<>]', '_', dimension2)
         quality = {
                 "low": "?bw_high=32",
                 "high":"?bw_high=194",
@@ -102,7 +137,7 @@ def radio(url, vid_quality):
         #---| Stream
         process = subprocess.Popen('cmd.exe /k ',\
             shell=True, stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=None)
-        arg_command =  f'ffmpeg -y -i {url_adress} -c:a copy "{file_name}"\n'
+        arg_command =  f'ffmpeg -probesize 50000000 -analyzeduration 50000000 -y -i {url_adress} -c:a copy "{file_name}"\n'
         process.stdin.write(arg_command.encode())
         o, e = process.communicate()
         process.stdin.close()
@@ -118,14 +153,10 @@ def vtt_srt(sub_title, program_title):
 
 def nrk(stream_url, program_title, vid_quality):
     """Parse data for nrk-tv website"""
-    quality = {
-        "low": "?bw_high=1000",
-        "med": "?bw_high=2000",
-        "high":"?bw_high=3500",
-    }
-    #--| Commands parameters
-    url_adress = f'{stream_url}{quality[vid_quality]}'
+    url_adress, framerate = resolve_hls_url(stream_url, vid_quality)
     print(url_adress)
+    # Old ffmpeg cannot transcode 50 fps HLS audio to ac3 without buffering errors.
+    audio_codec = 'copy' if framerate >= 50 else 'ac3'
     #--| cmd commands
     if 'podkast.nrk' in url_adress:
         pass
@@ -133,7 +164,7 @@ def nrk(stream_url, program_title, vid_quality):
         file_name = f'{program_title}.mkv'
         process = subprocess.Popen('cmd.exe /k ',\
             shell=True, stdin=subprocess.PIPE,stdout=subprocess.PIPE,stderr=None)
-        arg_command =  f'ffmpeg -y -i "{url_adress}" -vcodec copy -acodec ac3 "{file_name}"\n'
+        arg_command =  f'ffmpeg -probesize 50000000 -analyzeduration 50000000 -y -i "{url_adress}" -vcodec copy -acodec {audio_codec} "{file_name}"\n'
         process.stdin.write(arg_command.encode())
         o, e = process.communicate()
         process.stdin.close()
